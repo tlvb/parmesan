@@ -105,7 +105,7 @@ sub runitem {
 	my $host = '';
 	print "available: "; print " $_:$self->{hosts}->{$_}" for keys %{$self->{hosts}}; print "\n";
 	for my $h (keys %{$self->{hosts}}) {
-		next if $self->{hosts}->{$h} == 0;
+		next if $self->{hosts}->{$h} <= 0;
 		$host = $h;
 	}
 	if ($host eq '') {
@@ -113,7 +113,7 @@ sub runitem {
 		until (exists $self->{running}->{$pid}) {
 			$pid = wait;
 		}
-		my $host = delete $self->{running}->{$pid};
+		$host = delete $self->{running}->{$pid};
 		$self->{hosts}->{$host} += 1;
 	}
 	if ($host ne '') {
